@@ -10,16 +10,21 @@ import WebKit
 
 class ViewController: UIViewController {
 
+    private lazy var doubleSlider: DoubleSlide = {
+        let vc = DoubleSlide(rootVC: self, contentView: DashBoardView())
+        return vc
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         // Do any additional setup after loading the view.
+        
+        doubleSlider.setDoubleSlide()
     }
 
     @IBAction func doubleBtnAction(_ sender: Any) {
-        let doubleSlide = DoubleSlide(rootVC: self, contentView: DashBoardView())
-        doubleSlide.modalPresentationStyle = .overFullScreen
-        present(doubleSlide, animated: true)
+        doubleSlider.openDoubleSlide()
     }
     
 }

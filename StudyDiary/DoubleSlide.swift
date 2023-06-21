@@ -46,6 +46,10 @@ public class DoubleSlide: UIViewController {
         return imageView
     }()
     
+    // constraint
+    var contentBottomConstraint: NSLayoutConstraint?
+    var sContentBottomConstraint: NSLayoutConstraint?
+    
     public init(rootVC: UIViewController, contentView: UIView){
         self.rootViewController = rootVC
         self.contentView = contentView
@@ -58,27 +62,49 @@ public class DoubleSlide: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    public override func didMove(toParent parent: UIViewController?) {
+        
+        self.view.frame.origin.y = self.view.frame.size.height
+        
+        view.addSubview(dimmingView)
+        view.addSubview(sContentSlide)
+        view.addSubview(contentSlide)
+        
         
         setDimmingView()
         setContentView()
         setSubContentView()
     }
     
+    public func setDoubleSlide(){
+        self.rootViewController.addChild(self)
+        self.didMove(toParent: self.rootViewController)
+        self.rootViewController.view.addSubview(self.view)
+    }
+    
+    public func openDoubleSlide(){
+        self.view.frame.origin.y = 0
+        aniContentView(aniTime: 1.0)
+        aniSContentView(aniTime: 1.5)
+    }
+    
     private func setContentView(){
         // contentSlide 설정.
-        view.addSubview(contentSlide)
-
         NSLayoutConstraint.activate([
             contentSlide.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentSlide.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentSlide.heightAnchor.constraint(equalToConstant: 300),
-            contentSlide.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        // contentView 설정
-        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentBottomConstraint = contentSlide.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 300)
+        contentBottomConstraint?.isActive = true
+        
         
         contentSlide.addSubview(contentView)
+        // contentView 설정
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: contentSlide.leadingAnchor),
@@ -90,19 +116,19 @@ public class DoubleSlide: UIViewController {
     
     private func setSubContentView(){
         // subContentSlide 설정.
-        view.addSubview(sContentSlide)
-
         NSLayoutConstraint.activate([
             sContentSlide.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             sContentSlide.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             sContentSlide.heightAnchor.constraint(equalToConstant: 150),
-            sContentSlide.bottomAnchor.constraint(equalTo: contentSlide.topAnchor, constant: -10)
+            
         ])
         
-        // subContentView 설정
+        sContentBottomConstraint = sContentSlide.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 150)
+        sContentBottomConstraint?.isActive = true
+        
         
         sContentSlide.addSubview(sContentView)
-        
+        // subContentView 설정
         NSLayoutConstraint.activate([
             sContentView.leadingAnchor.constraint(equalTo: sContentSlide.leadingAnchor, constant: 10),
             sContentView.trailingAnchor.constraint(equalTo: sContentSlide.trailingAnchor, constant: -10),
@@ -115,7 +141,6 @@ public class DoubleSlide: UIViewController {
     private func setDimmingView(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissAction))
         dimmingView.addGestureRecognizer(tapGesture)
-        view.addSubview(dimmingView)
         
         NSLayoutConstraint.activate([
             dimmingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -125,8 +150,42 @@ public class DoubleSlide: UIViewController {
         ])
     }
     
+    // MARK: - Animation
+    private func aniContentView(aniTime: TimeInterval){
+        UIView.animate(withDuration: aniTime) {
+            self.contentBottomConstraint?.isActive = false
+            self.contentBottomConstraint = self.contentSlide.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.contentBottomConstraint?.isActive = true
+            
+            // view 새로고침 (필수)
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func aniSContentView(aniTime: TimeInterval){
+        UIView.animate(withDuration: aniTime) {
+            self.sContentBottomConstraint?.isActive = false
+            self.sContentBottomConstraint = self.sContentSlide.bottomAnchor.constraint(equalTo: self.contentSlide.topAnchor, constant: -10)
+            self.sContentBottomConstraint?.isActive = true
+            
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     @objc private func dismissAction(){
-        dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 1.0) {
+            self.contentBottomConstraint?.isActive = false
+            self.contentBottomConstraint = self.contentSlide.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 300)
+            self.contentBottomConstraint?.isActive = true
+            
+            self.sContentBottomConstraint?.isActive = false
+            self.sContentBottomConstraint = self.sContentSlide.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 150)
+            self.sContentBottomConstraint?.isActive = true
+            
+            self.view.layoutIfNeeded()
+        }completion: { _ in
+            self.view.frame.origin.y = self.view.frame.size.height
+        }
     }
     
     
