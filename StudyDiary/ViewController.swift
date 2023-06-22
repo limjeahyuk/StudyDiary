@@ -15,6 +15,11 @@ class ViewController: UIViewController {
         return vc
     }()
     
+    private lazy var titleSlide: TitleSlide = {
+        let vc = TitleSlide(contentView: UIView(frame: .zero), titleText: "타이틀")
+        return vc
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -26,6 +31,13 @@ class ViewController: UIViewController {
     @IBAction func doubleBtnAction(_ sender: Any) {
         doubleSlider.openDoubleSlide()
     }
+    
+    @IBAction func titleBtnAction(_ sender: Any) {
+        titleSlide.present(self, animated: true) {
+            print("done")
+        }
+    }
+    
     
 }
 

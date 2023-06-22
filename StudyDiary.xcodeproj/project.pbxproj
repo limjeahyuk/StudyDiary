@@ -14,6 +14,7 @@
 		0BEB3E922A40B077005C1C04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BEB3E912A40B077005C1C04 /* Assets.xcassets */; };
 		0BEB3E952A40B077005C1C04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BEB3E932A40B077005C1C04 /* LaunchScreen.storyboard */; };
 		0BEB3EA12A41F095005C1C04 /* DoubleSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEB3EA02A41F095005C1C04 /* DoubleSlide.swift */; };
+		0BEB3EAF2A44A420005C1C04 /* TitleSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEB3EAE2A44A420005C1C04 /* TitleSlide.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		0BEB3E942A40B077005C1C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0BEB3E962A40B077005C1C04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BEB3EA02A41F095005C1C04 /* DoubleSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSlide.swift; sourceTree = "<group>"; };
+		0BEB3EAE2A44A420005C1C04 /* TitleSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSlide.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				0BEB3E8C2A40B076005C1C04 /* ViewController.swift */,
 				0BEB3E8E2A40B076005C1C04 /* Main.storyboard */,
 				0BEB3EA02A41F095005C1C04 /* DoubleSlide.swift */,
+				0BEB3EAE2A44A420005C1C04 /* TitleSlide.swift */,
 				0BEB3E912A40B077005C1C04 /* Assets.xcassets */,
 				0BEB3E932A40B077005C1C04 /* LaunchScreen.storyboard */,
 				0BEB3E962A40B077005C1C04 /* Info.plist */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BEB3EAF2A44A420005C1C04 /* TitleSlide.swift in Sources */,
 				0BEB3EA12A41F095005C1C04 /* DoubleSlide.swift in Sources */,
 				0BEB3E8D2A40B076005C1C04 /* ViewController.swift in Sources */,
 				0BEB3E892A40B076005C1C04 /* AppDelegate.swift in Sources */,
